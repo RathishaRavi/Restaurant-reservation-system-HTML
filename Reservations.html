@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reservation Form</title>
+<style>
+@media (max-width: 600px) {
+.date-time-group {
+flex-direction: column;
+}
+.date-group,
+.time-group {
+margin-right: 0;
+margin-bottom: 10px;
+}
+}
+body {
+font-family: Arial, sans-serif;
+background-color: #f2f2f2;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+.container {
+max-width: 600px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+border-radius: 5px;
+box-sizing: border-box;
+}
+h1 {
+text-align: center;
+color: #007BFF;
+}
+.form-group {
+margin-bottom: 20px;
+}
+label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+color: #333;
+}
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+select,
+input[type="date"],
+input[type="time"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+}
+.date-time-group {
+display: flex;
+justify-content: space-between;
+}
+.date-group,
+.time-group {
+flex: 1;
+margin-right: 10px;
+}
+.submit-btn {
+background-color: #007BFF;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+box-sizing: border-box;
+}
+.reset-btn {
+background-color: #007BFF;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+box-sizing: border-box;
+}
+.home-btn {
+background-color: #28a745;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+box-sizing: border-box;
+margin-top: 10px;
+}
+.submit-btn:hover {
+background-color: #0056b3;
+}
+.reset-btn:hover {
+background-color: #0056b3;
+}
+.home-btn:hover {
+background-color: #218838;
+}
+.error-message {
+color: #ff0000;
+margin-top: 5px;
+}
+.welcome-message {
+color: #007BFF;
+margin-top: 10px;
+}
+.reservation-details {
+margin-top: 20px;
+padding: 10px;
+background-color: #e7f3fe;
+border: 1px solid #b3d7ff;
+border-radius: 5px;
+}
+</style>
+</head>
+<body background="https://media.istockphoto.com/id/1203053489/photo/the-concept-ofcooking-meat-the-chef-cook-salt-on-the-cooked-steak-on-a-black-backgrounda.webp?b=1&s=170667a&w=0&k=20&c=-E77bBUkY1F4qI4_wqMxtHcpqEtedlhkeHU3jADW8WQ=">
+<div class="container">
+<h1>Reservation Form</h1>
+<div id="welcomeMessage" class="welcome-message"></div>
+<form id="reservationForm" onsubmit="return validateForm()">
+<div class="form-group">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<span id="nameError" class="error-message"></span>
+</div>
+<div class="form-group">
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+<span id="emailError" class="error-message"></span>
+</div>
+<div class="form-group">
+<label for="phone">Phone:</label>
+<input type="tel" id="phone" name="phone" required>
+<span id="phoneError" class="error-message"></span>
+</div>
+<div class="form-group">
+<label for="party-size">Party Size:</label>
+<select id="party-size" name="party-size" required>
+<option value="1">1 person</option>
+<option value="2">2 people</option>
+<option value="3">3 people</option>
+<option value="4">4 people</option>
+<option value="5"> 5 people</option>
+</select>
+</div>
+<div class="form-group">
+<label>Date & Time:</label>
+<div class="date-time-group">
+<div class="date-group">
+<input type="date" id="reservation-date" name="reservation-date" required>
+</div>
+<div class="time-group">
+<input type="time" id="reservation-time" name="reservation-time" required>
+</div>
+</div>
+</div>
+<button type="submit" class="submit-btn">Make Reservation</button>
+<button type="reset" class="reset-btn">Reset</button>
+</form>
+<div id="reservationDetails" class="reservation-details" style="display:none;"></div>
+<button class="home-btn" onclick="goToHomepage()">Go to Homepage</button>
+</div>
+<script>
+window.onload = function () {
+var userName = getCookie('userName');
+if (userName) {
+document.getElementById('welcomeMessage').innerHTML = 'Welcome back, ' + userName + '!';
+}
+};
+function validateForm() {
+var nameInput = document.getElementById('name');
+var emailInput = document.getElementById('email');
+var phoneInput = document.getElementById('phone');
+var nameError = document.getElementById('nameError');
+var emailError = document.getElementById('emailError');
+var phoneError = document.getElementById('phoneError');
+var nameRegex = /^[a-zA-Z\s]+$/;
+var emailRegex = /^\S+@\S+\.\S+$/;
+var phoneRegex = /^\d{10}$/;
+var isValid = true;
+if (!nameInput.value.match(nameRegex)) {
+nameError.innerHTML = 'Invalid name';
+isValid = false;
+} else {
+nameError.innerHTML = '';
+}
+if (!emailInput.value.match(emailRegex)) {
+emailError.innerHTML = 'Invalid email address';
+isValid = false;
+} else {
+emailError.innerHTML = '';
+}
+if (!phoneInput.value.match(phoneRegex)) {
+phoneError.innerHTML = 'Invalid phone number (10 digits required)';
+isValid = false;
+} else {
+phoneError.innerHTML = '';
+}
+if (isValid) {
+setCookie('userName', nameInput.value, 30); // Set cookie for 30 days
+displayReservationDetails();
+}
+return false; // Prevent form submission
+}
+function displayReservationDetails() {
+var name = document.getElementById('name').value;
+var email = document.getElementById('email').value;
+var phone = document.getElementById('phone').value;
+var partySize = document.getElementById('party-size').value;
+var reservationDate = document.getElementById('reservation-date').value;
+var reservationTime = document.getElementById('reservation-time').value;
+
+var details = `<h2>Reservation Details</h2>
+<p><strong>Name:</strong> ${name}</p>
+<p><strong>Email:</strong> ${email}</p>
+<p><strong>Phone:</strong> ${phone}</p>
+<p><strong>Party Size:</strong> ${partySize} person(s)</p>
+<p><strong>Date:</strong> ${reservationDate}</p>
+<p><strong>Time:</strong> ${reservationTime}</p>`;
+
+document.getElementById('reservationDetails').innerHTML = details;
+document.getElementById('reservationDetails').style.display = 'block';
+}
+function goToHomepage() {
+window.location.href = 'home.html'; // Change this to your homepage URL
+}
+function setCookie(name, value, days) {
+var expires = '';
+if (days) {
+var date = new Date();
+date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+expires = '; expires=' + date.toUTCString();
+}
+document.cookie = name + '=' + value + expires + '; path=/';
+}
+function getCookie(name) {
+var nameEQ = name + '=';
+var cookies = document.cookie.split(';');
+for (var i = 0; i < cookies.length; i++) {
+var cookie = cookies[i];
+while (cookie.charAt(0) === ' ') {
+cookie = cookie.substring(1, cookie.length);
+}
+if (cookie.indexOf(nameEQ) === 0) {
+return cookie.substring(nameEQ.length, cookie.length);
+}
+}
+return null;
+}
+</script>
+</body>
+</html>

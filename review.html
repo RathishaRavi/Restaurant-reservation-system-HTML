@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Food Review Form</title>
+<style>
+@media (max-width: 600px) {
+.container {
+margin: 20px;
+}
+}
+body {
+font-family: 'Arial', sans-serif;
+background-color: #f2f2f2;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+.container {
+max-width: 800px;
+margin: 50px auto;
+padding: 20px;
+background-color: #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+border-radius: 5px;
+box-sizing: border-box;
+}
+h1 {
+text-align: center;
+color: #007BFF;
+}
+.form-group {
+margin-bottom: 20px;
+}
+label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+color: #333;
+}
+input[type="text"],
+textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+margin-top: 5px;
+}
+select {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+margin-top: 5px;
+}
+.rating {
+display: flex;
+align-items: center;
+margin-top: 10px;
+}
+.rating label {
+margin-right: 10px;
+cursor: pointer;
+}
+.rating input[type="radio"] {
+display: none;
+}
+.rating label::before {
+content: "\2605";
+font-size: 25px;
+color: #ccc;
+}
+.rating input[type="radio"]:checked + label::before {
+color: #ffbf00;
+}
+.submit-btn {
+background-color: #007BFF;
+color: #fff;
+padding: 10px 20px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+box-sizing: border-box;
+margin-top: 15px;
+}
+.submit-btn:hover {
+    background-color: #0056b3;
+}
+</style>
+</head>
+<body
+background="https://images.squarespacecdn.com/content/5134cbefe4b0c6fb04df8065/1637777041160-YGZRRJYX5P2KXW4L7Y02/image-asset.jpeg?contenttype=image%2Fjpeg">
+<div class="container">
+<h1>Food Review Form</h1>
+<!-- Display welcome message if the user's name is stored in a cookie -->
+<div id="welcomeMessage" class="welcome-message"></div>
+<form action="home.html" onsubmit="return validateForm()">
+<div class="form-group">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<span id="nameError" class="error-message"></span>
+</div>
+<div class="form-group">
+<label for="email">Email:</label>
+<input type="text" id="email" name="email" required>
+<span id="emailError" class="error-message"></span>
+</div>
+<div class="form-group">
+<label for="restaurant">Restaurant:</label>
+<input type="text" id="restaurant" name="restaurant" required>
+</div>
+<div class="form-group">
+<label for="rating">Rating:</label>
+<div class="rating">
+<input type="radio" id="star5" name="rating" value="5">
+<label for="star5"></label>
+<input type="radio" id="star4" name="rating" value="4">
+<label for="star4"></label>
+<input type="radio" id="star3" name="rating" value="3">
+<label for="star3"></label>
+<input type="radio" id="star2" name="rating" value="2">
+<label for="star2"></label>
+<input type="radio" id="star1" name="rating" value="1">
+<label for="star1"></label>
+</div>
+</div>
+<div class="form-group">
+<label for="review">Review:</label>
+<textarea id="review" name="review" rows="4" required></textarea>
+<span id="reviewError" class="error-message"></span>
+</div>
+<button type="submit" class="submit-btn">Submit Review</button>
+</form>
+</div>
+<script>
+window.onload = function () {
+var userName = getCookie('userName');
+if (userName) {
+document.getElementById('welcomeMessage').innerHTML = 'Welcome back, ' +
+userName + '!';
+}
+};
+function validateForm() {
+var nameInput = document.getElementById('name');
+var emailInput = document.getElementById('email');
+var reviewInput = document.getElementById('review');
+var nameError = document.getElementById('nameError');
+var emailError = document.getElementById('emailError');
+var reviewError = document.getElementById('reviewError');
+var nameRegex = /^[a-zA-Z\s]+$/;
+var emailRegex = /^\S+@\S+\.\S+$/;
+var isValid = true;
+if (!nameInput.value.match(nameRegex)) {
+nameError.innerHTML = 'Invalid name';
+isValid = false;
+} else {
+nameError.innerHTML = '';
+}
+if (!emailInput.value.match(emailRegex)) {
+emailError.innerHTML = 'Invalid email address';
+isValid = false;
+} else {
+emailError.innerHTML = '';
+}
+if (reviewInput.value.trim() === '') {
+reviewError.innerHTML = 'Review cannot be empty';
+isValid = false;
+} else {
+reviewError.innerHTML = '';
+}
+if (isValid) {
+setCookie('userName', nameInput.value, 30); // Set cookie for 30 days
+}
+return isValid;
+}
+function setCookie(name, value, days) {
+var expires = '';
+if (days) {
+var date = new Date();
+date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+expires = '; expires=' + date.toUTCString();
+}
+document.cookie = name + '=' + value + expires + '; path=/';
+}
+function getCookie(name) {
+var nameEQ = name + '=';
+var cookies = document.cookie.split(';');
+for (var i = 0; i < cookies.length; i++) {
+var cookie = cookies[i];
+while (cookie.charAt(0) === ' ') {
+cookie = cookie.substring(1, cookie.length);
+}
+if (cookie.indexOf(nameEQ) === 0) {
+return cookie.substring(nameEQ.length, cookie.length);
+}
+}
+return null;
+}
+</script>
+</body>
+</html>

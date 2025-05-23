@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home Delivery Order Form</title>
+<style>
+@media only screen and (max-width: 768px) {
+.container {
+width: 80%;
+}
+}
+body {
+font-family: Arial, Helvetica, sans-serif;
+background-color: #f4f4f4;
+margin: 0;
+padding: 0;
+}
+.container {
+max-width: 600px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+text-align: center;
+}
+.form-group {
+margin-bottom: 20px;
+}
+label {
+display: block;
+font-weight: bold;
+}
+input[type="text"],
+input[type="tel"],
+textarea,
+select {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+box-sizing: border-box;
+}
+textarea {
+height: 150px;
+resize: vertical;
+}
+button {
+background-color: #ff4500;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+width: 100%;
+box-sizing: border-box;
+}
+button:hover {
+background-color: #e63900;
+}
+.error {
+color: #ff0000;
+}
+</style>
+</head>
+<body background="https://encryptedtbn0.gstatic.com/images?q=tbn:ANd9GcSBfItoyex7nFlJsAd8P3hncIZ4nd8_F5Wfj0i0bD
+2alRycfpVC_150Q70HPiH1WesorP4&usqp=CAU">
+<div class="container">
+<h2>Home Delivery Order Form</h2>
+<form action="home.html" method="POST" onsubmit="return validateForm()">
+<div class="form-group">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+<span id="nameError" class="error"></span>
+</div>
+<div class="form-group">
+<label for="phone">Phone Number:</label>
+<input type="tel" id="phone" name="phone" required>
+<span id="phoneError" class="error"></span>
+</div>
+<div class="form-group">
+<label for="address">Delivery Address:</label>
+<textarea id="address" name="address" required></textarea>
+</div>
+<div class="form-group">
+<label for="order">Order Details:</label>
+<textarea id="order" name="order" required placeholder="Select items from the menu and
+enter quantity (e.g., Burger - 2)"></textarea>
+</div>
+<div class="form-group">
+<label for="payment">Payment Method:</label>
+<select id="payment" name="payment">
+<option value="credit_card">Credit Card</option>
+<option value="debit_card">Debit Card</option>
+<option value="paypal">PayPal</option>
+<option value="cash_on_delivery">Cash on Delivery</option>
+</select>
+</div>
+<button type="submit" onclick="calculateTotal()">Place Order</button>
+<div id="totalPrice"></div>
+</form>
+</div>
+<script>
+function calculateTotal() {
+    var orderDetails = document.getElementById('order').value;
+var menuItems = orderDetails.split('\n');
+var menu = {
+'cabernet franc': 9.90,
+'chianti': 7.99,
+'merlot': 5.99,
+'pinot noir': 14.99,
+'dornfelder': 16.99,
+'saivigon': 18.99,
+'black forest': 6.99,
+'butterscotch': 5.99,
+'strawberry': 7.99,
+};
+var total = 0;
+for (var i = 0; i < menuItems.length; i++) {
+var menuItemParts = menuItems[i].split(' - ');
+if (menuItemParts.length === 2) {
+var itemName = menuItemParts[0].trim();
+var quantity = parseInt(menuItemParts[1]);
+if (menu[itemName]) {
+total += menu[itemName] * quantity;
+}
+}
+}
+alert('Total Bill: $' + total.toFixed(2));
+return true;
+}
+</script>
+</body>
+</html>

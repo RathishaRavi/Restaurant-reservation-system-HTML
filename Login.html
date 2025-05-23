@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup </title>
+<style>
+@media screen and (max-width: 600px) {
+.container {
+max-width: 100%;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+width: calc(100% - 20px);
+}
+}
+body {
+font-family: Arial, Helvetica, sans-serif;
+background-color: #f4f4f4;
+margin: 0;
+padding: 0;
+}
+.container {
+max-width: 400px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+text-align: center;
+}
+.form-group {
+margin-bottom: 20px;
+}
+label {
+display: block;
+font-weight: bold;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+width: 100%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+margin-bottom: 10px;
+}
+button {
+background-color: #ff4500;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+}
+button.logout {
+background-color: #d9534f;
+}
+button:hover {
+background-color: #e63900;
+}
+</style>
+</head>
+<body background="https://plus.unsplash.com/premium_photo-1661432769134-
+758550b8fedb?ixlib=rb4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8cmVzdGF1cmFudCUyMGJhY2t
+ncm91bmR8ZW58MHx8MHx8fDA%3D&w=1000&q=80">
+<div class="container">
+<h2>Signup</h2>
+<form action="home.html" method="POST" onsubmit="return validateForm()">
+<div class="form-group">
+<label for="username">Name:</label>
+<input type="text" id="name" name="name" required>
+</div>
+<div class="form-group">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    </div>
+    <div class="passid">
+    <label for="passid">Password:</label>
+    <input type="password" id="password" name="password" required>
+    </div>
+    <button type="submit">Sign Up</button>
+    </form>
+    </div>
+    <script src="sample-registration-form-validation.js"></script>
+    <script>
+    function validateForm() {
+    var name = document.getElementById('name').value;
+    var email = document.getElementById('email').value;
+    var password = document.getElementById('password').value;
+    if (name === "") {
+    alert("Name must be filled out");
+    return false;
+    }
+    var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+    alert("Invalid email address");
+    return false;
+    }
+    if (password.length < 6) {
+    alert("Password must be at least 6 characters");
+    return false;
+    }
+    document.cookie = "username=" + name;
+    document.getElementById('welcomeMessage').innerHTML = "Welcome, " + name + "!";
+return true;
+}
+</script>
+<p id="welcomeMessage"></p>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Us</title>
+<style>
+@media only screen and (max-width: 768px) {
+.container {
+width: 80%;
+}
+}
+body {
+font-family: Arial, Helvetica, sans-serif;
+background-color: #000;
+color: #fff;
+margin: 0;
+padding: 0;
+}
+.container {
+max-width: 600px;
+margin: 0 auto;
+padding: 20px;
+background-color: #fff;
+color: #000;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h2 {
+text-align: center;
+}
+.form-group {
+margin-bottom: 20px;
+}
+label {
+display: block;
+font-weight: bold;
+color: #000;
+}
+input[type="text"],
+input[type="email"],
+textarea {
+width: 100%;
+padding: 10px;
+border: 1px solid #000;
+border-radius: 5px;
+}
+textarea {
+height: 150px;
+}
+button {
+background-color: #000;
+color: #fff;
+border: none;
+padding: 10px 20px;
+border-radius: 5px;
+cursor: pointer;
+}
+button:hover {
+background-color: #444;
+}
+</style>
+</head>
+<body background="https://media.istockphoto.com/id/1185866014/photo/beef-burgeron-black-background-for-fast-food-restaurant-design-or-fast-foodmenu.jpg?s=612x612&w=0&k=20&c=MQVaj8jnDyy4xdGqXeTnv7cwGwcLWIJITI2k
+Klw1-YE=">
+<div class="container">
+<h2>Contact Us</h2>
+<form method="POST" name='reg'  action="home.html"onSubmit="return formValid();">
+<div class="form-group">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" required>
+</div>
+<div class="form-group">
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" required>
+</div>
+<div class="form-group">
+<label for="message">Message:</label>
+<textarea id="message" name="message" required></textarea>
+</div>
+<button type="submit" onclick="setCookie()">Submit</button>
+</form>
+</div>
+<script>
+function formValid() {
+var nameInput = document.getElementById('name');
+var emailInput = document.getElementById('email');
+var messageInput = document.getElementById('message');
+var letters = /^[A-Za-z]+$/;
+if (!nameInput.value.match(letters)) {
+alert('Name must have alphabet characters only');
+nameInput.focus();
+return false;
+}
+var emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailInput.value.match(emailFormat)) {
+alert('Please enter a valid email address');
+emailInput.focus();
+return false;
+}
+if (messageInput.value.trim() === '') {
+alert('Message cannot be empty');
+messageInput.focus();
+return false;
+}
+return true;
+}
+function setCookie() {
+var nameInput = document.getElementById('name').value;
+var emailInput = document.getElementById('email').value;
+document.cookie = "name=" + encodeURIComponent(nameInput) + ";";
+document.cookie = "email=" + encodeURIComponent(emailInput) + ";";
+}
+</script></body></html>
